@@ -17,6 +17,8 @@ export function rowToProfile(row: ProfileRow | null): Profile {
     phone: row.phone ?? DEFAULT_PROFILE.phone,
     x: row.x_handle ?? DEFAULT_PROFILE.x,
     discord: row.discord ?? DEFAULT_PROFILE.discord,
+    // Antes de ejecutar actualizacion-discord.sql la columna no existe: usa el ID por defecto
+    discordId: row.discord_id === undefined ? DEFAULT_PROFILE.discordId : (row.discord_id ?? ''),
     photoUrl: row.photo_url ?? DEFAULT_PROFILE.photoUrl,
     // Si aún no hay versión en inglés guardada, usa la traducción por defecto
     // (solo cuando el texto en español sigue siendo el original).

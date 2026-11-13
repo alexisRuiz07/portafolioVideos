@@ -22,6 +22,7 @@ type Draft = {
   phone: string;
   x: string;
   discord: string;
+  discordId: string;
   taglineEn: string;
   bioEn: string;
   servicesEn: string;
@@ -39,6 +40,7 @@ const toDraft = (p: Profile): Draft => ({
   phone: p.phone,
   x: p.x,
   discord: p.discord,
+  discordId: p.discordId,
   taglineEn: p.taglineEn,
   bioEn: p.bioEn,
   servicesEn: p.servicesEn.join('\n'),
@@ -263,6 +265,8 @@ export default function AdminPanel() {
       phone: draft.phone.trim(),
       x: draft.x.trim(),
       discord: draft.discord.trim(),
+      // Solo el número (por si pegan el enlace completo o con espacios)
+      discordId: (draft.discordId.match(/\d{15,22}/) ?? [''])[0],
       taglineEn: draft.taglineEn.trim(),
       bioEn: draft.bioEn.trim(),
       servicesEn: draft.servicesEn
@@ -510,6 +514,12 @@ export default function AdminPanel() {
           <Field id="f-phone" label="WhatsApp" value={draft.phone} onChange={set('phone')} type="tel" />
           <Field id="f-x" label="Usuario de X" value={draft.x} onChange={set('x')} />
           <Field id="f-discord" label="Usuario de Discord" value={draft.discord} onChange={set('discord')} />
+          <Field
+            id="f-discord-id"
+            label="ID de Discord (el botón abre tu perfil; vacío = solo copia el usuario)"
+            value={draft.discordId}
+            onChange={set('discordId')}
+          />
 
           <div className="panel-subhead">
             <strong>Versión en inglés</strong>

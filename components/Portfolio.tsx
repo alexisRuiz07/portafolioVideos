@@ -331,7 +331,18 @@ export default function Portfolio(props: { profile: Profile; videos: Video[] }) 
               <span>{links.xLabel}</span>
             </a>
           )}
-          {p.discord && (
+          {p.discordId ? (
+            <a
+              href={`https://discord.com/users/${p.discordId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary btn-on-dark contact-btn"
+              title={t.discordOpen}
+            >
+              <DiscordIcon />
+              <span>{p.discord || 'Discord'}</span>
+            </a>
+          ) : p.discord && (
             <button type="button" className="btn btn-secondary btn-on-dark contact-btn" onClick={copyDiscord} title={t.discordTitle}>
               <DiscordIcon />
               <span>
@@ -341,7 +352,7 @@ export default function Portfolio(props: { profile: Profile; videos: Video[] }) 
             </button>
           )}
         </div>
-        {p.discord && (
+        {!p.discordId && p.discord && (
           <span className="contact-hint" role="status">
             {discordCopied ? t.discordHint : ''}
           </span>

@@ -138,6 +138,7 @@ export function supabaseBackend(sb: SupabaseClient): Backend {
         phone: p.phone,
         x_handle: p.x,
         discord: p.discord,
+        discord_id: p.discordId,
         tagline_en: p.taglineEn,
         bio_en: p.bioEn,
         services_en: p.servicesEn,

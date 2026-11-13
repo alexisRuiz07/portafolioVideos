@@ -13,6 +13,8 @@ export type Profile = {
   phone: string;
   x: string;
   discord: string;
+  /** Número de ID de Discord: el botón abre https://discord.com/users/{id} */
+  discordId: string;
   photoUrl: string | null;
   /** Versión en inglés (si está vacía se muestra el español) */
   taglineEn: string;
@@ -51,6 +53,7 @@ export type ProfileRow = {
   phone: string | null;
   x_handle: string | null;
   discord: string | null;
+  discord_id?: string | null;
   photo_url: string | null;
   tagline_en?: string | null;
   bio_en?: string | null;

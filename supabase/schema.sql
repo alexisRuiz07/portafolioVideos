@@ -42,6 +42,7 @@ create table if not exists public.profile (
 );
 alter table public.profile enable row level security;
 alter table public.profile add column if not exists discord text not null default '';
+alter table public.profile add column if not exists discord_id text not null default '';
 -- Versión en inglés del perfil (botón ES | EN)
 alter table public.profile add column if not exists tagline_en text not null default '';
 alter table public.profile add column if not exists bio_en text not null default '';
@@ -59,7 +60,7 @@ drop policy if exists "profile_admin_update" on public.profile;
 create policy "profile_admin_update" on public.profile
   for update to authenticated using (public.is_admin()) with check (public.is_admin());
 
-insert into public.profile (id, name, alias, tagline, location, bio, tools, services, email, phone, x_handle, discord)
+insert into public.profile (id, name, alias, tagline, location, bio, tools, services, email, phone, x_handle, discord, discord_id)
 values (
   1,
   'Alexis R.',
@@ -72,7 +73,8 @@ values (
   'ruisito124@gmail.com',
   '+57 323 425 6883',
   '@Alexisrq007',
-  'TheAlex021'
+  'alex0210168',
+  '1115847978121445376'
 )
 on conflict (id) do nothing;
 

@@ -18,7 +18,8 @@ export const DEFAULT_PROFILE: Profile = {
   email: 'ruisito124@gmail.com',
   phone: '+57 323 425 6883',
   x: '@Alexisrq007',
-  discord: 'TheAlex021',
+  discord: 'alex0210168',
+  discordId: '1115847978121445376',
   // Avatar animado: cejas y sonrisa (public/perfil-animado.webp). Versión fija: public/perfil.png
   // Si subes otra foto en el panel, la reemplaza.
   photoUrl: '/perfil-animado.webp',
