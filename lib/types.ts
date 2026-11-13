@@ -14,6 +14,10 @@ export type Profile = {
   x: string;
   discord: string;
   photoUrl: string | null;
+  /** Versión en inglés (si está vacía se muestra el español) */
+  taglineEn: string;
+  bioEn: string;
+  servicesEn: string[];
 };
 
 export type VideoSource = 'file' | 'youtube';
@@ -48,6 +52,9 @@ export type ProfileRow = {
   x_handle: string | null;
   discord: string | null;
   photo_url: string | null;
+  tagline_en?: string | null;
+  bio_en?: string | null;
+  services_en?: string[] | null;
 };
 
 export type VideoRow = {

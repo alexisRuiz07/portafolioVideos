@@ -22,6 +22,9 @@ type Draft = {
   phone: string;
   x: string;
   discord: string;
+  taglineEn: string;
+  bioEn: string;
+  servicesEn: string;
 };
 
 const toDraft = (p: Profile): Draft => ({
@@ -36,6 +39,9 @@ const toDraft = (p: Profile): Draft => ({
   phone: p.phone,
   x: p.x,
   discord: p.discord,
+  taglineEn: p.taglineEn,
+  bioEn: p.bioEn,
+  servicesEn: p.servicesEn.join('\n'),
 });
 
 const errMsg = (e: unknown) => {
@@ -257,6 +263,12 @@ export default function AdminPanel() {
       phone: draft.phone.trim(),
       x: draft.x.trim(),
       discord: draft.discord.trim(),
+      taglineEn: draft.taglineEn.trim(),
+      bioEn: draft.bioEn.trim(),
+      servicesEn: draft.servicesEn
+        .split('\n')
+        .map((s) => s.trim())
+        .filter(Boolean),
     };
     try {
       await api.saveProfile(next);
@@ -498,6 +510,20 @@ export default function AdminPanel() {
           <Field id="f-phone" label="WhatsApp" value={draft.phone} onChange={set('phone')} type="tel" />
           <Field id="f-x" label="Usuario de X" value={draft.x} onChange={set('x')} />
           <Field id="f-discord" label="Usuario de Discord" value={draft.discord} onChange={set('discord')} />
+
+          <div className="panel-subhead">
+            <strong>Versión en inglés</strong>
+            <span>Se muestra cuando el visitante elige EN. Si dejas un campo vacío, se usa el texto en español.</span>
+          </div>
+          <Field id="f-tagline-en" label="Frase principal (inglés)" value={draft.taglineEn} onChange={set('taglineEn')} />
+          <Field id="f-bio-en" label="Sobre mí (inglés)" value={draft.bioEn} onChange={set('bioEn')} rows={5} />
+          <Field
+            id="f-services-en"
+            label="Servicios en inglés (uno por línea)"
+            value={draft.servicesEn}
+            onChange={set('servicesEn')}
+            rows={4}
+          />
 
           <div className="row" style={{ alignItems: 'center' }}>
             <button className="btn btn-primary" onClick={saveProfile} disabled={saving}>

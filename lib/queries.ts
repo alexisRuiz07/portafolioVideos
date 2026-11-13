@@ -18,7 +18,20 @@ export function rowToProfile(row: ProfileRow | null): Profile {
     x: row.x_handle ?? DEFAULT_PROFILE.x,
     discord: row.discord ?? DEFAULT_PROFILE.discord,
     photoUrl: row.photo_url ?? DEFAULT_PROFILE.photoUrl,
+    // Si aún no hay versión en inglés guardada, usa la traducción por defecto
+    // (solo cuando el texto en español sigue siendo el original).
+    taglineEn: row.tagline_en || (row.tagline === DEFAULT_PROFILE.tagline ? DEFAULT_PROFILE.taglineEn : ''),
+    bioEn: row.bio_en || (row.bio === DEFAULT_PROFILE.bio ? DEFAULT_PROFILE.bioEn : ''),
+    servicesEn: row.services_en?.length
+      ? row.services_en
+      : sameList(row.services, DEFAULT_PROFILE.services)
+        ? DEFAULT_PROFILE.servicesEn
+        : [],
   };
+}
+
+function sameList(a: string[] | null, b: string[]) {
+  return Boolean(a) && a!.length === b.length && a!.every((x, i) => x === b[i]);
 }
 
 export function rowToVideo(sb: SupabaseClient, r: VideoRow): Video {

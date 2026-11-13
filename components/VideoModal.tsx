@@ -3,7 +3,15 @@ import type { Video } from '@/lib/types';
 import { ytEmbed } from '@/lib/youtube';
 import { useModalBehavior } from './useModalBehavior';
 
-export default function VideoModal({ video, onClose }: { video: Video; onClose: () => void }) {
+export default function VideoModal({
+  video,
+  onClose,
+  closeLabel = 'Cerrar',
+}: {
+  video: Video;
+  onClose: () => void;
+  closeLabel?: string;
+}) {
   useModalBehavior(true, onClose);
   return (
     <div className="video-modal" onClick={onClose} role="dialog" aria-modal="true" aria-label={video.title}>
@@ -26,7 +34,7 @@ export default function VideoModal({ video, onClose }: { video: Video; onClose: 
             {video.description && <span>{video.description}</span>}
           </div>
           <button className="btn btn-secondary btn-on-dark" onClick={onClose} autoFocus>
-            Cerrar
+            {closeLabel}
           </button>
         </div>
       </div>

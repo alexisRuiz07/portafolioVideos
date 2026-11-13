@@ -138,6 +138,9 @@ export function supabaseBackend(sb: SupabaseClient): Backend {
         phone: p.phone,
         x_handle: p.x,
         discord: p.discord,
+        tagline_en: p.taglineEn,
+        bio_en: p.bioEn,
+        services_en: p.servicesEn,
         updated_at: new Date().toISOString(),
       });
       if (error) throw error;

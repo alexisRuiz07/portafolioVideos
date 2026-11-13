@@ -1,10 +1,9 @@
--- ════════════════════════════════════════════════════════════════════
+
 --  Portafolio thealex — esquema de Supabase
 --  Pégalo completo en Supabase → SQL Editor → New query → Run.
 --  Se puede ejecutar más de una vez sin romper nada.
--- ════════════════════════════════════════════════════════════════════
 
--- ── Administradores ─────────────────────────────────────────────────
+-- Administradores
 -- Solo los usuarios de esta tabla pueden escribir. Sin políticas = nadie
 -- puede leerla ni modificarla desde la API pública.
 create table if not exists public.admins (
@@ -21,8 +20,10 @@ set search_path = ''
 as $$
   select exists (select 1 from public.admins where user_id = auth.uid());
 $$;
+-- Permiso explícito: necesario si el proyecto tiene desactivado "Automatically expose new tables"
+grant execute on function public.is_admin() to anon, authenticated;
 
--- ── Perfil (una sola fila, id = 1) ───────────────────────────────────
+-- Perfil (una sola fila, id = 1)
 create table if not exists public.profile (
   id         int primary key default 1 check (id = 1),
   name       text not null default '',
@@ -41,6 +42,10 @@ create table if not exists public.profile (
 );
 alter table public.profile enable row level security;
 alter table public.profile add column if not exists discord text not null default '';
+-- Versión en inglés del perfil (botón ES | EN)
+alter table public.profile add column if not exists tagline_en text not null default '';
+alter table public.profile add column if not exists bio_en text not null default '';
+alter table public.profile add column if not exists services_en text[] not null default '{}';
 
 drop policy if exists "profile_public_read" on public.profile;
 create policy "profile_public_read" on public.profile
@@ -71,7 +76,7 @@ values (
 )
 on conflict (id) do nothing;
 
--- ── Videos ──────────────────────────────────────────────────────────
+-- Videos
 create table if not exists public.videos (
   id           uuid primary key default gen_random_uuid(),
   title        text not null,
@@ -135,7 +140,7 @@ end;
 $$;
 grant execute on function public.set_featured_video(uuid) to authenticated;
 
--- ── Videos iniciales (YouTube) ───────────────────────────────────────
+-- Videos iniciales (YouTube)
 -- Solo se insertan si todavía no existen. sort_order mantiene este orden.
 insert into public.videos (title, category, source, youtube_id, sort_order)
 select v.title, v.category, 'youtube', v.youtube_id, v.sort_order
@@ -154,7 +159,7 @@ update public.videos set featured = true
 where youtube_id = 'u5XtVFzGHoY'
   and not exists (select 1 from public.videos where featured);
 
--- ── Storage: buckets públicos para videos y fotos ────────────────────
+-- Storage: buckets públicos para videos y fotos
 insert into storage.buckets (id, name, public, allowed_mime_types)
 values ('videos', 'videos', true, array['video/mp4', 'video/quicktime', 'video/webm', 'image/jpeg'])
 on conflict (id) do update set public = true, allowed_mime_types = excluded.allowed_mime_types;

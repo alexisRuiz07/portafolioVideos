@@ -22,6 +22,11 @@ export const DEFAULT_PROFILE: Profile = {
   // Avatar animado: cejas y sonrisa (public/perfil-animado.webp). Versión fija: public/perfil.png
   // Si subes otra foto en el panel, la reemplaza.
   photoUrl: '/perfil-animado.webp',
+  taglineEn: 'I edit Reels, TikToks and YouTube videos that keep viewers hooked until the very last second.',
+  bioEn:
+    "I'm Alexis, a video editor. I work with creators and brands, turning raw footage into pieces with rhythm, great sound and captions that hook.\n" +
+    "I'm looking to join agencies and production companies that want a fast, detail-oriented editor.",
+  servicesEn: ['Editing for Reels and TikTok', 'YouTube video editing', 'Dynamic captions', 'Color grading and sound mixing'],
 };
 
 export const CATS: Record<Category, string> = {
